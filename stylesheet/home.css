@@ -1,0 +1,298 @@
+.headline {
+    text-align: center;
+    padding-left: 0px;
+    width: 720px;
+}
+
+h2:hover, h3:hover, h4:hover {
+    color:#f05300;
+    -o-transition:.3s;
+    -ms-transition:.3s;
+    -moz-transition:.3s;
+    -webkit-transition:.3s;
+    transition:.3s;
+}
+
+#velktext {
+    margin-bottom:0;
+    color:#FFF;
+    font-size:20px;
+    padding-bottom:10px;
+}
+.velkdiv {
+    width: 710px;
+    padding: 5px;
+    margin: 0;
+    border: 0;
+}
+.velkdiv_text {
+    width: 700px;
+}
+
+.float_divs {
+    float: left;
+    position: relative;
+}
+.right_panel {
+    width: 240px;
+    height: 360px;
+    max-height: 360px;
+    overflow: hidden;
+    background-color: #1cd529;
+    position: relative;
+    float: left;
+    top: 0;
+}
+.right_panel ul li {
+    display: block;
+    text-decoration: none;
+}
+.right_panel_title {
+    font-size: 16px;
+}
+.right_panel_title a {
+    color: orange;
+}
+.right_panel_feed {
+    font-size: 14px;
+}
+/*.right_panel_link {*/
+    /*font-size: 8px;*/
+/*}*/
+/*Boxes id's start*/
+
+#news {
+    background-color:#DAE5EB;
+    width: 710px;
+    padding: 5px;
+    height: 350px;
+}
+
+#newsbox {
+    float:left;
+    max-height:240px;
+    min-height:180px;
+    width:960px;
+    height:540px;
+}
+
+.box {
+    float:left;
+    width:240px;
+    min-height:230px;
+    background-repeat:no-repeat;
+    background-size: 210px;
+    min-width:240px;
+}
+
+#mbox {
+    width:480px;
+}
+
+#bbox {
+    width:720px;
+}
+
+/*box's below clears to the specified side*/
+#crbox {
+/*    clear right (den rykker til højre)*/
+    float:right;
+    clear:right;
+    max-width:240px;
+}
+
+#clbox {
+/*    clear left (den rykker til venstre)*/
+    float:left;
+    clear:left;
+    max-width:240px;
+}
+
+#cmbox {
+/*    clear middle (den rykker under alt andet)*/
+    float:left;
+    clear:both;
+    width:480px;
+    max-width:480px;
+}
+
+#cbbox {
+/*    clear middle big (den rykker under alt andet, men denne er større. Tjek width)*/
+    float:left;
+    clear:left;
+    width:720px;
+}
+
+#lbox {
+    clear: left;
+    float: left;
+    width:200px;
+}
+
+.boxtext {
+    padding-left: 5px;
+}
+
+.box, #mbox, #bbox, #crbox, #clbox, #cmbox, #cbbox, #lbox {
+    text-align: center;
+}
+/*Boxes id's end*/
+
+h1 {
+    color:White;
+    margin:10px 0px 0px 0px;
+}
+
+.facebook {
+    background-color:#455160;
+    display:block;
+}
+
+.facebook:hover {
+    background-color:#3d3df0;
+}
+
+.facebook h1 {
+    margin-top:90px;
+}
+/*The color boxes - give them one of the desired colors below!*/
+.allcolor {
+    height:240px;
+    background-size: 210px;
+    min-width:240px;
+    max-height:240px;
+}
+
+.red {
+    background-color:rgb(255, 28, 28);
+}
+.red:hover {
+    color:rgb(253, 50, 50);
+}
+
+.darkgreen {
+    background-color:#07b400;
+}
+.darkgreen:hover {
+    background-color:#09c301;
+}
+
+.green {
+    background-color:#43bd43;
+}
+.green:hover {
+    background-color:#47f447;
+}
+
+.darkgrey {
+    background-color:#3d4246;
+    color:#FFF;
+}
+
+.darkgrey:hover {
+    background-color:#51565f;
+}
+
+.grey {
+    background-color:#454950;
+    color:#FFF;
+}
+.grey:hover {
+    background-color:#51565f;
+}
+
+.lightgrey {
+    background-color:#848f96;
+}
+.lightgrey a {
+    color:rgba(35, 246, 35, 1);
+}
+.lightgrey:hover {
+    background-color:#8f9ba3;
+}
+
+.black {
+    background-color:#000;
+    color:#FFF;
+}
+.black:hover {
+    background-color:#1d1d1d;
+}
+
+.blue {
+    background-color:#3d86b4
+}
+
+.blue:hover {
+    background-color:#3daef5
+}
+
+.bigred {
+    color:red;
+    font-size:45px;
+    margin-top:53px;
+}
+
+/*hover text and div*/
+.red:hover > #hovertext {
+    display:block;
+    left:0px;
+    height:30px;
+}
+
+.darkgreen:hover > #hovertext {
+    display:block;
+    left:0px;
+    height:30px;
+}
+
+.green:hover > #hovertext {
+    display:block;
+    left:0px;
+    height:30px;
+}
+
+.grey:hover > #hovertext {
+    display:block;
+    left:0px;
+    height:30px;
+}
+.lightgrey:hover > #hovertext {
+    display:block;
+    left:0px;
+    height:30px;
+}
+.black:hover > #hovertext {
+    display:block;
+    left:0px;
+    height:30px;
+}
+/*End*/
+
+/*bottom lines start*/
+.bottomline {
+    position:relative;
+    bottom:-88px;
+    background-color:green;
+    width:100%;
+    height:30px;
+}
+/*End*/
+
+#right {
+    float:right;
+    clear:right;
+    width:200px;
+    height:210px;
+    margin-top:auto;
+    margin-bottom:0px;
+    background-color:black;
+}
+
+test {
+    
+}
+
+#drag {
+    
+}

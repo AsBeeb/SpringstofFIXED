@@ -1,0 +1,22 @@
+.vid {
+    position:relative;
+    padding: 0;
+    border: solid #00B800 1px;
+    margin:5px;
+    clear:both;
+}
+
+.lv {
+    float: left;
+}
+
+.rv {
+    float:right;
+}
+
+.vtext {
+    color:#FFF;
+    position:relative;
+    margin: 5px;
+    clear:right;
+}

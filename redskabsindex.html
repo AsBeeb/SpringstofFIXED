@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- redskabsindex.html -->
+    <title>Redskabsindex</title>
+    <link rel='stylesheet' type='text/css' href='stylesheet/redskabsindex.css'/>
+    <link rel='stylesheet' type='text/css' href='stylesheet/stylesheet2.css'/>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+<script>
+$(document).ready(function(){
+
+//TABLET FUNCTIONS
+$("#index").on('touchstart touchmove', function(e){
+     e.preventDefault(); 
+});
+    
+var browser = "none"
+if (navigator.userAgent.search("Chrome") >= 0) browser = "chrome";
+else if (navigator.userAgent.search("Firefox") >= 0) browser = "firefox";
+else if (navigator.userAgent.search("Safari") >= 0 && navigator.userAgent.search("Chrome") < 0) browser = "safari";
+else if (navigator.userAgent.search("Opera") >= 0) browser = "opera";
+else browser = "msie";
+    
+var selectLinewidth = $("#selectLinewidthDrop-down");    
+    
+//TAB
+var activeIndex = "#index1";
+var activePaint = "#paint1";
+var activeSave = "#save1";
+$("#tab1").addClass("active");
+$("#index2").hide();
+$("#paint2").hide();
+$("#index3").hide();
+$("#paint3").hide();
+$(".tab").click(function() {
+    var tab = $(this).attr("id").substr(3);
+    if (activeIndex != "#index"+tab) {
+        $(".tab").removeClass("active");
+        $(this).addClass("active");
+        $(activeIndex).hide();
+        $(activePaint).hide();
+        activeIndex = "#index"+tab;
+        activePaint = "#paint"+tab;
+        activeSave = "#save"+tab;
+        $(activeIndex).show();
+        $(activePaint).show();
+    };
+});
+    
+//ADDTAB
+$("#addTab").click(function() {
+    var newTab = document.createElement("input");
+    newTab.type = "button";
+    newTab.id = "tab "+"X"
+    newTab.className = "tab";
+    newTab.value = "Fane "+"X";
+//    newTab.appendTo(document.getElementById("addTab"));
+    $("#").append(newTab)
+});
+    
+var withGrid = false;
+//INSERT ELEMENT
+$(".b").click(function(){
+    var value = ($(this).attr("id")).substr(2);
+    if (grid) withGrid = [20, 20];
+        $("<div></div>")
+        .addClass(value)
+        .addClass("index")
+        .appendTo($(activeIndex))
+        .draggable({
+            containment: activeIndex,
+            snap: ".index",
+            stack: ".index",
+            disabled: false,
+            grid: withGrid,
+            snapTolerance: 10
+        })
+        .data("angle", 0)
+        .draggable(draggableOptions)
+        .click(function() {$(this).toggleClass("marked") });
+});
+    
+var selectedObjs;
+var draggableOptions = {
+    start: function(event, ui) {
+        //get all selected...
+        if (ui.helper.hasClass('marked')) selectedObjs = $('div.marked');
+        else {
+            selectedObjs = $(ui.helper);
+            $('div.marked').removeClass('marked')
+        }
+    },
+    drag: function(event, ui) {
+        var currentLoc = $(this).position();
+        var prevLoc = $(this).data('prevLoc');
+        if (!prevLoc) {
+            prevLoc = ui.originalPosition;
+        }
+
+        var offsetLeft = currentLoc.left-prevLoc.left;
+        var offsetTop = currentLoc.top-prevLoc.top;
+
+        moveSelected(offsetLeft, offsetTop);
+        $(this).data('prevLoc', currentLoc);
+    }
+};
+
+function moveSelected(ol, ot){
+    console.log("moving to: " + ol + ":" + ot);
+    selectedObjs.each(function(){
+        $this =$(this);
+        var p = $this.position();
+        var l = p.left;
+        var t = p.top;
+        console.log({id: $this.attr('id'), l: l, t: t});
+
+
+        $this.css('left', l+ol);
+        $this.css('top', t+ot);
+    })
+}
+//http://jsfiddle.net/zVZFq/358/
+    
+//$(document).click(function(e) {
+//    $(".index").mousedown(function(e) {
+//        $(this).addClass("activeRot");
+//        $("#index").bind("mousemove", function(e) {
+//            $(".activeRot").css({
+//                "top": e.pageY,
+//                "left": e.pageX
+//            });
+//        });
+//    });
+//    $(".index").mouseup(function(e) {
+//        $(".activeRot").removeClass("activeRot");
+//    });
+//});
+    
+var duplicateTrue = true;
+//KEYDOWN
+$(document).keydown(function (e) {
+    
+    //DELETE ELEMENT - "SHIFT"
+    if (e.keyCode == 16) {
+        $(".index").click(function() { $(this).remove(); });
+        $(".marked").remove();
+    };
+    
+    //IGNOR SNAP - "ALT"
+    if (e.keyCode == 18) $(".index").draggable({snap: false});
+
+    //ROTATE - "R"
+    if (e.keyCode == 82) {
+        $(".index").draggable({ disabled: true });
+            $(".index").mousedown(rotateStart);
+            $("#index").mouseup(function() {
+                $(".activeRot").data('angle', newAngle);
+                $(".activeRot").removeClass("activeRot");
+            });
+    };
+    
+    var dupAngle = 0;
+    //DUPLICATE - "D"
+    if (e.keyCode == 68) {
+        if (duplicateTrue) {
+        var duplicate = function() {
+            dupAngle = $(this).data('angle');
+            $("<div></div>")
+            .addClass($(this).attr("class"))
+            .appendTo($(activeIndex))
+            .css({'-moz-transform':'rotate(' + dupAngle + 'deg)',
+                '-webkit-transform':'rotate(' + dupAngle + 'deg)',
+                '-o-transform':'rotate(' + dupAngle + 'deg)',
+                '-ms-transform':'rotate(' + dupAngle + 'deg)',
+                'transform':'rotate(' + dupAngle + 'deg)',
+                 left: $(this).position().left + "px",
+                 top: $(this).position().top + "px",
+                 })
+                .data('angle', dupAngle);
+            $(".index").draggable({
+                containment: activeIndex,
+                snap: ".index",
+                stack: ".index",
+                disabled: false,
+                grid: withGrid,
+                snapTolerance: 10
+            });
+        };
+        $(".marked").each(duplicate);
+        };
+        duplicateTrue = false;
+        $(".index").click(duplicate);
+    };
+    
+});
+    
+
+var mouse = {start: 0, end: 0, set: 0};
+var newAngle = 0;
+var rotateStart = function(e) {
+    $(this).addClass("activeRot");
+    $(".marked").addClass("activeRot");
+    mouse.start = e.pageY - $(activeIndex).offset().top;
+    $("#index").bind("mousemove", rotate);
+};
+var rotate = function(e) {
+    var oldAngle = $(".activeRot").data('angle');
+    mouse.end = e.pageY - $(activeIndex).offset().top;
+    mouse.set = mouse.end - mouse.start;
+    newAngle = oldAngle + mouse.set;
+//        var test = Math.sin(newAngle/2/180*Math.PI)*Math.sin((180-110.47-newAngle/2)/180*Math.PI)*$(this).width()/Math.sin(110.47/180*Math.PI)/Math.sin(90/180*Math.PI);
+    $(".activeRot").css({
+//            "width":"166.4px",
+//            "height":"87.1px",
+//            "margin-top":"26.6px",
+//            "margin-top":test,
+//            "margin-left":"5px",
+        '-moz-transform':'rotate(' + newAngle + 'deg)',
+        '-webkit-transform':'rotate(' + newAngle + 'deg)',
+        '-o-transform':'rotate(' + newAngle + 'deg)',
+        '-ms-transform':'rotate(' + newAngle + 'deg)',
+        'transform':'rotate(' + newAngle + 'deg)'
+    });
+};
+    
+//KEYUP
+$(document).keyup(function (e) {
+    //DELETE ELEMENT - "SHIFT"
+    if (e.keyCode == 16) $(".index").off('click');
+    
+    //INGOR SNAP - "ALT"
+    if (e.keyCode == 18) $(".index").draggable({snap: ".index"});
+    
+    //ROTAT - "R"
+    if (e.keyCode == 82) $(".index").off("mousedown", rotateStart).draggable({ disabled: false });
+    
+    //DUPLICATE - "D"
+    if (e.keyCode == 68) {
+        $(".index").off("click");
+        duplicateTrue = true;
+    }
+    
+    //FUNCTIONTEST - "X"
+    if (e.keyCode == 88) $(".index").off("click");
+
+});
+
+//OPEN TAB MENU
+$(".obs").click(function() {
+        $(".obs").not(this).next(".under").hide(200);
+        $(this).next(".under").show(200);
+});
+
+//QUIT WARNING
+$(window).bind('beforeunload', function(){ 
+    if ($(activeIndex+" div").length > 0) return "Du er stadig i gang med en opstilling!";
+});
+    
+//PAINT
+var linewidth = 1e-10;
+var strokestyle = "white";
+$("#linewidth").val("0");
+    //PAINT CONTENT
+    var canvas1 = document.querySelector("#paint1");
+    var ctx1 = canvas1.getContext('2d');
+    var sketch1 = document.querySelector("#index1");
+    var sketch_style1 = getComputedStyle(sketch1);
+    canvas1.width = parseInt(sketch_style1.getPropertyValue('width'));
+    canvas1.height = parseInt(sketch_style1.getPropertyValue('height'));
+    
+    var canvas2 = document.querySelector("#paint2");
+    var ctx2 = canvas2.getContext('2d');
+    var sketch2 = document.querySelector("#index2");
+    var sketch_style2 = getComputedStyle(sketch2);
+    canvas2.width = parseInt(sketch_style2.getPropertyValue('width'));
+    canvas2.height = parseInt(sketch_style2.getPropertyValue('height'));
+    
+    var canvas3 = document.querySelector("#paint3");
+    var ctx3 = canvas3.getContext('2d');
+    var sketch3 = document.querySelector("#index3");
+    var sketch_style3 = getComputedStyle(sketch3);
+    canvas3.width = parseInt(sketch_style3.getPropertyValue('width'));
+    canvas3.height = parseInt(sketch_style3.getPropertyValue('height'));
+    
+    var mouse = {x: 0, y: 0};
+
+//BRUSH SIZE
+$("#linewidth").keyup(function() {
+    $(".selectLinewidth").removeClass("active");
+    var linewidthSubstr = $("#linewidth").val();
+    if (linewidthSubstr.substring(0,1) == "0") $("#linewidth").val(linewidthSubstr.substring(1,2));
+    linewidth = linewidthSubstr;
+    ctx.lineWidth = linewidth;
+    ctx.strokeStyle = strokestyle;
+    if (ctx.lineWidth == 2) $("#selectLinewidth_2").addClass("active");
+    else if (ctx.lineWidth == 4) $("#selectLinewidth_4").addClass("active");
+    else if (ctx.lineWidth == 6) $("#selectLinewidth_6").addClass("active");
+});
+    
+//SELECT BRUSH SIZE
+selectLinewidth.hide();
+$("#selectLinewidth").click(function() {
+    if (selectLinewidth.is(":visible")) {
+        selectLinewidth.hide();
+        $(this).removeClass("active");
+    } else {
+        selectLinewidth.show();
+        $(this).addClass("active");
+    };
+});
+$(".selectLinewidth").click(function() {
+    $(".selectLinewidth").removeClass("active");
+    ctx.lineWidth = $(this).attr("id").substr(16);
+    $("#linewidth").val(ctx.lineWidth);
+    $(this).addClass("active");
+    $("#selectLinewidth").removeClass("active");
+    selectLinewidth.hide();
+});
+
+//PENCIL
+var draw = false;
+var brush = false;
+var eraser = false;
+var eraseeffect = "";
+var pencil = null;
+$(".draw").click(function() {
+    if (!draw) {
+        $(".paint").css({"cursor" : "crosshair", "z-index" : "10"});
+        draw = true;
+    } else {
+        $(".paint").css({"cursor" : "auto", "z-index" : "4"});
+        $(".selectLinewidth").removeClass("active");
+        draw = false;
+    };
+    var pencil = $(this).attr("id");
+    if (pencil == "brush") if (brush) {
+            brush = false;
+            linewidth = 1e-10;
+            $("#brush").removeClass("active");
+            selectLinewidth.hide();
+        } else if (!brush) {
+            linewidth = 2;
+            strokestyle = "black";
+            brush = true;
+            eraser = false;
+            $("#brush").addClass("active");
+            $("#eraser").removeClass("active");
+            $("#selectLinewidth_2").addClass("active");
+            eraseeffect = "source-over";
+        };
+    if (pencil == "eraser") if (eraser) {
+            eraser = false;
+            linewidth = 1e-10;
+            $("#eraser").removeClass("active");
+            selectLinewidth.hide();
+        } else if (!eraser) {
+            linewidth = 5;
+            strokestyle = "white";
+            eraser = true;
+            brush = false;
+            $("#eraser").addClass("active");
+            $("#brush").removeClass("active");
+            eraseeffect = "destination-out";
+        };
+    if (linewidth == 1e-10) $("#linewidth").val(0);
+    else $("#linewidth").val(linewidth);
+});
+    
+//PAINT FUNCTION
+$("body").click(function() {
+    if (activeIndex == "#index1") {
+        canvas = canvas1;
+        ctx = ctx1;
+    } else if (activeIndex == "#index2") {
+        canvas = canvas2;
+        ctx = ctx2;
+    } else if (activePaint == "#paint3") {
+        canvas = canvas3
+        ctx = ctx3;
+    };
+    /* Mouse Capturing Work */
+    canvas.addEventListener('mousemove', function(e) {
+        mouse.x = e.pageX - $(activeIndex).offset().left - 2;
+        mouse.y = e.pageY - $(activeIndex).offset().top - 1.55;
+        canvas = document.querySelector(activePaint);
+        ctx = canvas.getContext('2d');
+    }, false);
+        /* Drawing on Paint App */
+    ctx.lineWidth = linewidth;
+    ctx.strokeStyle = strokestyle;
+    ctx.lineJoin = 'round';
+    ctx.lineCap = 'round';
+    canvas.addEventListener('mousedown', function(e) {
+        ctx.beginPath();
+        ctx.globalCompositeOperation=eraseeffect;
+        ctx.moveTo(mouse.x, mouse.y);
+        canvas.addEventListener('mousemove', onPaint, false);
+    }, false);
+    canvas.addEventListener('mouseup', function() {
+        canvas.removeEventListener('mousemove', onPaint, false);
+    }, false);
+    var onPaint = function() {
+        ctx.lineTo(mouse.x, mouse.y);
+        ctx.stroke();
+        ctx.save();
+    };
+    //http://cssdeck.com/labs/qwtakpii/
+});
+
+//UNDO "RESTORE"
+$("#restore").click(function() {
+    ctx.restore();
+});
+    
+//GRID
+var grid = false;
+var c = document.getElementById("grid");
+var ctxGrid = c.getContext("2d");
+c.width = canvas1.width;
+c.height = canvas1.height;
+$("#gridSwitch").click(function() {
+    if (!grid) {
+        for (var i = 20; i < 701; i = i + 20) {
+            ctxGrid.strokeStyle = "#CCC"
+            ctxGrid.moveTo(i,0);
+            ctxGrid.lineTo(i,500)
+            ctxGrid.moveTo(0,i);
+            ctxGrid.lineTo(700,i);
+            ctxGrid.stroke();
+        };
+        $("#gridSwitch").addClass("active");
+        $(".index").draggable({
+            containment: activeIndex,
+            snap: ".index",
+            stack: ".index",
+            disabled: false,
+            grid: [20, 20]
+        });
+        grid = true;
+    } else {
+        c.width = canvas1.width;
+        c.height = canvas1.height;
+        $("#gridSwitch").removeClass("active");
+        $(".index").draggable({
+            containment: activeIndex,
+            snap: ".index",
+            stack: ".index",
+            disabled: false,
+            grid: false
+        });
+        grid = false;
+    };
+});
+    
+//FULL SCREEN
+$("#full").click(function() {
+    var elem = document.getElementById(activeIndex.substr(1))
+    $(".indexSpace").addClass("indexFullscreen");
+    // ## The below if statement seems to work better ## if ((document.fullScreenElement && document.fullScreenElement !== null) || (document.msfullscreenElement && document.msfullscreenElement !== null) || (!document.mozFullScreen && !document.webkitIsFullScreen)) {
+    if ((document.fullScreenElement !== undefined && document.fullScreenElement === null) || (document.msFullscreenElement !== undefined && document.msFullscreenElement === null) || (document.mozFullScreen !== undefined && !document.mozFullScreen) || (document.webkitIsFullScreen !== undefined && !document.webkitIsFullScreen)) {
+        if (elem.requestFullScreen) {
+            elem.requestFullScreen();
+        } else if (elem.mozRequestFullScreen) {
+            elem.mozRequestFullScreen();
+        } else if (elem.webkitRequestFullScreen) {
+            elem.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
+        } else if (elem.msRequestFullscreen) {
+            elem.msRequestFullscreen();
+        }
+    } else {
+        if (document.cancelFullScreen) {
+            document.cancelFullScreen();
+        } else if (document.mozCancelFullScreen) {
+            document.mozCancelFullScreen();
+        } else if (document.webkitCancelFullScreen) {
+            document.webkitCancelFullScreen();
+        } else if (document.msExitFullscreen) {
+            document.msExitFullscreen();
+        }
+    }
+});
+
+//INDEX TO PICTURE
+var indexName = "";
+$(".saveAs").click(function() {
+        if ($(activeIndex+" div").length > 0) {
+            var activeCanvasSave = document.querySelector(activeSave);
+            var activeCtxSave = activeCanvasSave.getContext("2d");
+            activeCanvasSave.width = canvas1.width;
+            activeCanvasSave.height = canvas1.height;
+            activeCtxSave.fillStyle = "#FFF";
+            activeCtxSave.fillRect(0,0,canvas1.width,canvas1.height);
+            $(activeIndex+" div").each(function(event) {
+                if (activePaint == "#paint1") activeCtxSave.drawImage(canvas1, 0, 0);
+                else if (activePaint == "#paint2") activeCtxSave.drawImage(canvas2, 0, 0);
+                else if (activePaint == "#paint3") activeCtxSave.drawImage(canvas3, 0, 0);
+                var img = $(this);
+                var bkURL = img.css("background-image");
+                if (browser == "chrome") {
+                    bkURL = bkURL.substr(bkURL.lastIndexOf("Design"))
+                    bkURL = bkURL.substr(0, bkURL.lastIndexOf(")"));
+                } else if (browser == "msie" || browser == "firefox") {
+                    bkURL = bkURL.substr(bkURL.lastIndexOf("Design"))
+                    bkURL = bkURL.substr(0, bkURL.lastIndexOf("\")"));
+                };
+                var img = new Image();
+                img.src = bkURL;
+                var saveTop = parseInt($(this).css("top"))-$(activeSave).position().top;
+                var saveLeft = parseInt($(this).css("left"))-$(activeSave).position().left;
+                var testNaN = isNaN(saveLeft);
+                if (testNaN) {
+                    saveLeft = "0";
+                    saveTop = "0";
+                };
+                var saveAngle = $(this).data("angle");
+                activeCtxSave.beginPath();
+                activeCtxSave.moveTo(0,0);
+                activeCtxSave.lineTo(0,500);
+                activeCtxSave.lineTo(700,500);
+                activeCtxSave.lineTo(700,0);
+                activeCtxSave.lineTo(0,0);
+                activeCtxSave.stroke();
+                activeCtxSave.save();
+                activeCtxSave.translate(saveLeft, saveTop);
+                activeCtxSave.translate(img.width/2, img.height/2);
+                activeCtxSave.rotate(saveAngle*Math.PI/180);
+                activeCtxSave.drawImage(img, -(img.width/2), -(img.height/2));
+                activeCtxSave.restore();
+                var logoImage = new Image();
+                logoImage.src = "Design/logo_002_final.png";
+                activeCtxSave.drawImage(logoImage, 543, 443, 150, 50);
+            });
+    downloadFunciton($(this).attr("id"));
+    //PRINT INDEX
+    if ($(this).attr("id") == "printOp") {
+        downloadFunciton("gemOp")
+        $("body").css("visibility","hidden");
+        $(activeSave).css("visibility","visible");
+        $(activeSave).addClass("printSettings");
+        $(activeIndex).append("<h2 id='printName'>"+"awdawdwad"+"</h2>")
+        window.print();
+        $("#printName").remove();
+        $(activeSave).removeClass("printSettings");
+        $("body").css("visibility","visible");
+        }
+    
+    //SAVE INDEX AS
+    if ($(this).attr("id") == "gemOpVText") {
+        var anchor = document.getElementById("downloadText");
+        anchor.setAttribute('download', indexName+'.html');
+        anchor.setAttribute('href', 'data:text/html;charset=UTF-8,'+
+                            '<h2 style="font-family:Abeezee,Century Gothic,Apple Gothic,sans-serif;font-size:2em">'+indexName+'</h2><img src="'+document.getElementById(activeSave.substring(1)).toDataURL()+'" height="90%" />'+
+$(activeIndex).html().substr($(activeIndex).html().lastIndexOf("canvas")+7));
+};
+    
+    } else alert("Der er ingen redskaber at gemme.");
+});
+    
+    //SCREENSHOT INDEX
+var downloadFunciton = function(saveFunc) {
+    var downloadOp = document.getElementById("download")
+    if (saveFunc == "gemOp" || saveFunc == "gemOpVText") indexName = prompt("Navngiv din redskabsopstilling:","");
+    if (indexName == null) event.preventDefault();
+    else if (indexName.length < 1) {
+        indexName = "Unavngivet redskabsopstilling";
+        downloadOp.href = document.getElementById(activeSave.substring(1)).toDataURL();
+    };
+    downloadOp.download = indexName;
+};
+   
+//LOAD INDEX
+$("#loadText").click(function() {
+    if ($(activeIndex+" div").length > 0) if (!confirm("Du er allerede i gang med at lave en opstilling. Opstillingen vil blive lagt oven i den eksisterende.")) return false;
+});
+$('#loadText').change(function() {
+    var files = document.getElementById('loadText').files;
+    var file = files[0];
+    var reader = new FileReader();
+
+    reader.onloadend = function(evt) {
+        if (evt.target.readyState == FileReader.DONE) $(activeIndex).append(evt.target.result.slice(evt.target.result.lastIndexOf("</h2>")+5));
+    $(".index").draggable({
+            containment: activeIndex,
+            snap: ".index",
+            stack: ".index",
+            disabled: false,
+            grid: withGrid,
+            snapTolerance: 10
+        })
+        .data("angle", 0)
+        .draggable(draggableOptions)
+        .click(function() {$(this).toggleClass("marked") });
+    };
+    
+    reader.readAsBinaryString(file);
+});
+    
+//MARK ELEMENTS
+var startTop = 0;
+var startLeft = 0;
+var markFunction = function(e) {
+    document.getElementById("index").style.cursor = "none";
+    if (stayMarked) $(".marked").removeClass("marked");
+    var mark = document.createElement("div");
+    mark.id = "markElements";
+    mark.style.backgroundColor = "rgba(0, 226, 255, 0.49)";
+    mark.style.border = "1px solid rgba(61, 181, 196, 0.49)";
+    mark.style.opacity = "0.3";
+    mark.style.position = "absolute";
+    mark.style.zIndex = "10";
+    mark.style.top = e.pageY+"px";
+    mark.style.left = e.pageX+"px";
+    mark.style.width = "0px";
+    mark.style.height = "0px";
+    startTop = e.pageY;
+    startLeft = e.pageX;
+    document.getElementById(activeIndex.substr(1)).appendChild(mark);
+    $("#index").bind("mousemove", function(e) {
+        if (e.pageY - startTop < 0) $("#markElements").css({"height": Math.abs(e.pageY - startTop) + "px", "margin-top": "-" + Math.abs(e.pageY - startTop) + "px"});
+        else $("#markElements").css("height", Math.abs(e.pageY - startTop) + "px");
+        if (e.pageX - startLeft < 0) $("#markElements").css({"width": Math.abs(e.pageX - startLeft) + "px", "margin-left": "-" + Math.abs(e.pageX - startLeft) + "px"});
+        else $("#markElements").css("width", Math.abs(e.pageX - startLeft) + "px"); 
+        $(activeIndex+" .index").each(function() {
+            doElsCollide = function(el1, el2) {
+                el1.offsetBottom = el1.offsetTop + el1.offsetHeight;
+                el1.offsetRight = el1.offsetLeft + el1.offsetWidth;
+                el2.offsetBottom = el2.offsetTop + el2.offsetHeight;
+                el2.offsetRight = el2.offsetLeft + el2.offsetWidth;
+    
+            return !((el1.offsetBottom < el2.offsetTop) ||
+                     (el1.offsetTop > el2.offsetBottom) ||
+                     (el1.offsetRight < el2.offsetLeft) ||
+                     (el1.offsetLeft > el2.offsetRight))
+            };
+            if (doElsCollide(this, document.getElementById("markElements"))) { $(this).addClass("marked"); };
+        });
+    });
+};
+document.addEventListener("mouseup", function(e) {
+    $("#markElements").remove();
+    document.getElementById("index").style.cursor = "auto";
+});
+    
+var stayMarked = true;
+$(document).keydown(function (e) {
+    if (e.keyCode == 17) {
+        $(".index").draggable({ disabled: true }).css("cursor", "auto");
+        $(".index").mousedown(function() { $(this).addClass("marked") });
+        document.getElementById("index").addEventListener("mousedown", markFunction);
+        stayMarked = false;
+    };
+});
+$(document).keyup(function (e) {
+    if (e.keyCode == 17) {
+        $(".index").draggable({ disabled: false }).css("cursor", "move");
+        document.getElementById("index").removeEventListener('mousedown', markFunction);
+        stayMarked = true;
+    };  
+});
+    
+//CLEAR
+$("#clear").click(function() {
+    if (confirm("Vil du nulstille dine redskabsopstillinger?")) {
+        //REMOVE ELEMENTSxx
+        $(".index").remove();
+        //CLOSE TABS
+        $(".over").children(".under").hide(200);
+        //RESTART PAINT
+        eraser = false;
+        brush = false;
+        draw = false;
+        $("#linewidth").val("0");
+        selectLinewidth.hide();
+        $("#selectLinewidth").removeClass("active");
+        $(".selectLinewidth").removeClass("active");
+        canvas1.width = parseInt(sketch_style1.getPropertyValue('width'));
+        canvas1.height = parseInt(sketch_style1.getPropertyValue('height'));
+        canvas2.width = parseInt(sketch_style2.getPropertyValue('width'));
+        canvas2.height = parseInt(sketch_style2.getPropertyValue('height'));
+        canvas3.width = parseInt(sketch_style3.getPropertyValue('width'));
+        canvas3.height = parseInt(sketch_style3.getPropertyValue('height'));
+        c.width = canvas.width;
+        c.height = canvas.height;
+        ctx1.lineWidth = 1e-10;
+        $(".paint").css("cursor", "auto");
+        $(".draw").removeClass("active");
+        $("#gridSwitch").removeClass("active");
+        //GO TO TAB 1
+        activeIndex = "#index1";
+        activePaint = "#paint1";
+        $(".tab").removeClass("active");
+        $("#tab1").addClass("active");
+        $("#index2").hide();
+        $("#paint2").hide();
+        $("#index3").hide();
+        $("#paint3").hide();
+        $(activeIndex).show();
+        $(activePaint).show();
+        $(".marked").removeClass("marked");
+        $("#markElements").remove();
+    };
+});
+    
+$("#testKey").click(function() {
+    
+});
+    
+});
+</script>
+</head>
+<body>
+<!-- Text Box -->
+    <center>
+        <div id="menu">
+        <div id="text">
+            <h1 class="h">Redskabsindex - BETA</h1>
+
+<div id="body">
+    <div id="redskabs_menu">
+    Redskaber
+<li class="over"><span id="airtrack" class="obs">Air-Track Plus</span>
+    <ul id="airtrack_u" class="under">
+        <li><input type="button" id="b_m75" class="b" value="7,5 m"></li>
+        <li><input type="button" id="b_m9" class="b" value="9 m"></li>
+        <li><input type="button" id="b_m12" class="b" value="12 m"></li>
+        <li><input type="button" id="b_m15"  class="b" value="15 m"></li>
+        <li><input type="button" id="b_m18" class="b" value="18 m"></li>
+        <li><input type="button" id="b_m20" class="b" value="20 m"></li>
+    </ul>
+</li>
+<li class="over"><span id="tramp" class="obs">Trampoliner</span>
+    <ul id="tramp_u" class="under">
+        <li><input type="button" id="b_child" class="b" value="B&oslash;rne"></li>
+        <li><input type="button" id="b_mini" class="b" value="Mini"></li>
+        <li><input type="button" id="b_stor" class="b" value="Stortrampolin"></li>
+    </ul>
+</li>
+<li class="over"><span id="maatte" class="obs">M&aring;tter</span>
+    <ul class="under" id="maatte_u">
+            <li><input type="button" id="b_x2x2" class="b" value="2x2 m"></li>
+            <li><input type="button" id="b_x2x3" class="b" value="2x3 m"></li>
+            <li><input type="button" id="b_x2x4" class="b" value="2x4 m"></li>
+            <li><input type="button" id="b_x3x5" class="b" value="3x5 m"></li>
+            <li><input type="button" id="b_fri" class="b" value="Frim&aelig;rke"></li>
+    </ul>
+</li>
+<li class="over"><span id="tradi" class="obs">Traditionelle</span>
+    <ul id="tradi_u" class="under">
+        <li><input type="button" id="b_buk" class="b" value="Buk"></li>
+        <li><input type="button" id="b_KG" class="b" value="KG springbr&aelig;t"></li>
+        <li><input type="button" id="b_springbr" class="b" value="Springbr&aelig;t"></li>
+        <li><input type="button" id="b_ribbe" class="b" value="Ribbe"></li>
+    </ul>
+</li>
+<li class="over"><span id="skum" class="obs">Skumredskaber</span>
+    <ul id="skum_u" class="under">
+        <li><input type="button" id="b_ende" class="b" value="Endekasse"></li>
+        <li><input type="button" id="b_side" class="b" value="Sidekasse"></li>
+        <li><input type="button" id="b_saltoplint" class="b" value="Saltoplint"></li>
+        <li><input type="button" id="b_skumplint" class="b" value="Delt skumplint"></li>
+        <li><input type="button" id="b_lillekile" class="b" value="Lille kilem&aring;tte"></li>
+        <li><input type="button" id="b_storkile" class="b" value="Stor kilem&aring;tte"></li>
+    </ul>
+</li>
+</div>
+
+<div id="index">
+    <canvas id="grid"></canvas>
+    <img  id="logo" src="Design/logo_002_final.png" style="
+    position: absolute;   
+    width:150px;
+    margin-left:545px;
+    margin-top:444px;
+    z-index:10;
+    pointer-events: none;">
+<!--TAB 1-->
+<div id="index1" class="indexSpace">
+    <canvas id="paint1" class="paint">Du kan ikke tegne..</canvas>
+    <canvas id="save1" class="save">Du kan ikke gemme..</canvas>
+</div>
+<!--TAB  2-->
+<div id="index2" class="indexSpace">
+    <canvas id="paint2" class="paint">Du kan ikke tegne..</canvas>
+    <canvas id="save2" class="save">Du kan ikke gemme..</canvas>
+</div>
+<!--TAB 3-->
+<div id="index3" class="indexSpace">
+    <canvas id="paint3" class="paint">Du kan ikke tegne..</canvas>
+    <canvas id="save3" class="save">Du kan ikke gemme..</canvas>
+</div>
+</div>
+    
+<div id="settings">
+<div id="undermenu">
+<div id="length_1m"></div><span>1 m.</span>
+    <input type="button" id="clear" value="Nulstil alt">
+    <input type="button" id="brush" class="draw" value="Blyant">
+    <input type="button" id="eraser" class="draw" value="Viskel&aelig;der">
+    Str.<input type="text" maxlength="2" value="0" id="linewidth"></input>
+    <input type="button" id="selectLinewidth" value="v">
+    <ul id="selectLinewidthDrop-down">
+        <li><input type="button" id="selectLinewidth_2" class="selectLinewidth" value="2"></li>
+        <li><input type="button" id="selectLinewidth_4" class="selectLinewidth" value="4"></li>
+        <li><input type="button" id="selectLinewidth_9" class="selectLinewidth" value="9"></li>
+    </ul>
+    <input type="button" id="gridSwitch" value="Gitter">
+    <a id="downloadText" href="#"> <input type="button" id="gemOpVText" class="saveAs"  value="Gem som"/> </a>
+    <form id="target" action="javascript:myFunction(); return false;"> <input type="file" id="loadText" name="loadOp"/></form>
+    <a id="download" href="#"> <input type="button" id="gemOp" class="saveAs" value="Screenshot"/> </a>
+    <input type="button" id="printOp" class="saveAs" value="Print"/>
+    <input type="button" id="tab1" class="tab" value="Fane 1"/>
+    <input type="button" id="tab2" class="tab" value="Fane 2"/>
+    <input type="button" id="tab3" class="tab" value="Fane 3"/>
+    <input type="button" id="full" value="Fuld sk&aelig;rm">
+    <input type="button" id="testKey"/>
+<!--    <input type="button" id="addTab" value="+"/>-->
+<!--    <input type="button" id="restore" value="Undo"/>-->
+<!--    <input type="button" id="b_person" class="b" value="Person">-->
+    <p>
+        Slet redskab: "Shift"<br>
+        Ignorer tilpasning: "Alt"<br>
+        Roter redskab: "R"<br>
+        Dupliker redskab: "D"<br>
+        Marker flere redskaber: "Ctrl"<br>
+    </p>
+    <div id="img-out"></div>
+</div>
+</div>
+    
+</div>
+        </div>
+        </div>
+    <div id="om_redskabsindex"><p>Dette er "redskabsindex'et", som vi kalder det. Det er et program, som man kan lave redskabsopstillinger med. Det er ikke fuldt funktionelt, s&aring; det kan ske, at der er nogle ting, som ikke fungerer optimalt. Vi arbejder p&aring; at videreudvikle programmet, dens funktioner og g&oslash;re s&aring; det er s&aring; brugervenligt som muligt at bruge. Det er derfor stadig en BETA version.<br>Vi vil gerne h&oslash;re meninger om programmet, s&aring; kontakt os gerne. Find ud af hvordan under <a href="?p=kontakt">kontakt</a>, tak.</p></div>
+    </center>

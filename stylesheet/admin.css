@@ -1,0 +1,32 @@
+body {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    background-color: #575757;
+}
+.content_t_back {
+    position: relative;
+    float: left;
+    margin: 0;
+    padding: 0;
+}
+.admn_content{
+    float: left;
+    position: relative;
+    width: 100%;
+    height: 800px;
+    background-color: #262626;
+}
+.admn_content h4 {
+    color: #07b400;
+}
+.content_t_bar {
+}
+.add_content_t_bar {
+}
+.content_t_bar h3 {
+}
+.cent_text {
+    text-align: center;
+}

@@ -1,0 +1,437 @@
+#text {
+    padding-bottom:10px;
+}
+
+#body {
+    background-color:#efefef;
+    margin:10px;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/*MENU*/
+
+#redskabs_menu {
+    position:absolute;
+    background-color:#efefef;
+    text-align:center;
+    font-size:25px;
+    font-weight:900;
+    margin:5px;
+}
+
+.over {
+    font-size:19px;
+    list-style-type:none;
+    border:1px solid grey;
+    padding:5px 10px 2px 0px;
+    margin:-1px 0 0 -1px;
+}
+
+.over span:hover {
+    text-decoration:underline;
+}
+
+.over span:hover, button:hover  {
+    cursor: pointer;
+}
+
+.under {
+	display: none;
+    list-style-type:none;
+    margin:3px auto auto -30px;
+    padding-bottom:5px;
+}
+
+button {
+    color:white;
+    font-weight:normal;
+    background-color:#848F96;
+    width:95px;
+    display:inline-block;
+}
+
+button:hover {
+    color:#404952;
+}
+
+/*For storeknapper*/
+
+#b_KG {
+    width:110px;
+}
+
+#b_saltoplint, #b_skumplint, #b_lillekile, #b_storkile {
+    width:105px;
+}
+
+.active {
+    box-shadow: 2px 2px 5px #888888;
+}
+
+/*INDEX*/
+/* 1m = 20px */
+
+#grid {
+	position: absolute;
+    width:700px;
+    height:500px;
+    margin-left:186px;
+    margin-top:1px;
+    z-index:3;
+}
+
+#index {
+    z-index:-1;
+    width:700px;
+    height:500px;
+    margin-left:185px
+}
+
+.marked {
+    border: 1px solid lightblue;
+    margin-top:-1px;
+    margin-left:-1px
+}
+
+/*TAB*/
+.indexSpace {
+    background-color:white;
+    width:700px;
+    height:500px;
+    border:1px solid grey;
+    z-index:2;
+}
+
+.paint {
+	position: absolute;
+    z-index:4;
+}
+
+.save {
+    position:absolute;
+    background-color:white;
+    z-index: -5;
+}
+
+.index {
+/*    RELATIVE ON:
+      - 
+      Lægger forkert
+      Flyver rundt med duplicate
+      +
+      Samler bedre
+      Holder sig bedre for ramme*/
+/*    position:relative;*/
+    position:absolute;
+    z-index:4;
+}
+
+.index:hover {
+    cursor:move;
+}
+
+.activeElement {
+    border:2px solid lightblue;
+}
+
+/*Airtrack plus*/
+
+.m75 {
+    height:56px;
+    width:150px;
+    background:url(../Design/Redskaber-index/PNG/m75.png) no-repeat;
+}   
+
+.m9 {
+    height:56px;
+    width:180px;
+    background:url(../Design/Redskaber-index/PNG/m9.png) no-repeat;
+}   
+
+.m12 {
+    height:56px;
+    width:240px;
+    background:url(../Design/Redskaber-index/PNG/m12.png) no-repeat;
+}   
+
+.m15 {
+    height:56px;
+    width:300px;
+    background:url(../Design/Redskaber-index/PNG/m15.png) no-repeat;
+}   
+
+.m18 {
+    height:56px;
+    width:360px;
+    background:url(../Design/Redskaber-index/PNG/m18.png) no-repeat;
+}   
+
+.m20 {
+    height:56px;
+    width:400px;
+    background:url(../Design/Redskaber-index/PNG/m20.png) no-repeat;
+}
+
+/*Trampoliner*/
+
+.child {
+    height:28px;
+    width:40px;
+    background:url(../Design/Redskaber-index/PNG/child.png) no-repeat;
+}   
+
+.mini {
+    height:25px;
+    width:25px;
+    background:url(../Design/Redskaber-index/PNG/mini_small.png) no-repeat;
+}
+
+.stor {
+    height:61px;
+    width:102px;
+    background:url(../Design/Redskaber-index/PNG/stor.png) no-repeat;
+}
+
+/*Måtter:*/
+
+.x2x2 {
+    height:40px;
+    width:40px;
+    background:url(../Design/Redskaber-index/PNG/x2x2.png) no-repeat;
+}   
+
+.x2x3 {
+    height:40px;
+    width:60px;
+    background:url(../Design/Redskaber-index/PNG/x2x3.png) no-repeat;
+}   
+
+.x2x4 {
+    height:40px;
+    width:80px;
+    background:url(../Design/Redskaber-index/PNG/x2x4.png) no-repeat;
+}   
+
+.x3x5 {
+    height:60px;
+    width:100px;
+    background:url(../Design/Redskaber-index/PNG/x3x5.png) no-repeat;
+}
+   
+.fri {
+    height:20px;
+    width:40px;
+    background:url(../Design/Redskaber-index/PNG/fri.png) no-repeat;
+}  
+
+/*Traditionelle*/
+
+.buk {
+    height:6px;
+    width:14px;
+    background:url(../Design/Redskaber-index/PNG/buk.png) no-repeat;
+}  
+
+.KG {
+    height:20px;
+    width:40px;
+    background:url(../Design/Redskaber-index/PNG/KG.png) no-repeat;
+}  
+   
+.springbr {
+    height:12px;
+    width:24px;
+    background:url(../Design/Redskaber-index/PNG/springbr.png) no-repeat;
+}  
+   
+.ribbe {
+    height:20px;
+    width:40px;
+    background:url(../Design/Redskaber-index/PNG/ribber.png) no-repeat;
+}  
+
+/*Skumredskaber*/
+
+.ende {
+    height:30px;
+    width:20px;
+    background:url(../Design/Redskaber-index/PNG/ende.png) no-repeat;
+}
+
+.side {
+    height:10px;
+    width:40px;
+    background:url(../Design/Redskaber-index/PNG/side.png) no-repeat;
+}   
+
+.saltoplint {
+    height:14px;
+    width:26px;
+    background:url(../Design/Redskaber-index/PNG/saltoplint.png) no-repeat;
+}
+
+.skumplint {
+    height:18px;
+    width:26px;
+    background:url(../Design/Redskaber-index/PNG/skumplint.png) no-repeat;
+}
+
+.lillekile {
+    height:20px;
+    width:40px;
+    background:url(../Design/Redskaber-index/PNG/lillekile.png) no-repeat;
+}
+
+.storkile {
+    height:30px;
+    width:50px;
+    background:url(../Design/Redskaber-index/PNG/storkile.png) no-repeat;
+}
+
+.person {
+    height:36px;
+    width:7px;
+    background:url(../Design/Redskaber-index/PNG/person.png) no-repeat;
+}
+
+/* ROTATE */
+
+.deg45 {
+    transform:rotate(45deg);
+    -ms-transform:rotate(45deg);
+    -webkit-transform:rotate(45deg);
+}
+
+.deg90 {
+    transform:rotate(90deg);
+    -ms-transform:rotate(90deg);
+    -webkit-transform:rotate(90deg);
+}
+
+.deg135 {
+    transform:rotate(135deg);
+    -ms-transform:rotate(135deg);
+    -webkit-transform:rotate(135deg);
+}
+
+.deg180 {
+    transform:rotate(180deg);
+    -ms-transform:rotate(180deg);
+    -webkit-transform:rotate(180deg);
+}
+
+.deg225 {
+    transform:rotate(225deg);
+    -ms-transform:rotate(225deg);
+    -webkit-transform:rotate(225deg);
+}
+
+.deg270 {
+    transform:rotate(270deg);
+    -ms-transform:rotate(270deg);
+    -webkit-transform:rotate(270deg);
+}
+
+.deg315 {
+    transform:rotate(315deg);
+    -ms-transform:rotate(315deg);
+    -webkit-transform:rotate(315deg);
+}
+
+/*SETTINGS*/
+
+#settings {
+    display:inline-flex;
+    font-size:13px;
+    margin-left:180px;
+}
+
+#length_1m {
+    width:20px;
+    height:1px;
+    background-color:black;
+    margin:5px 0px 0px 12px;
+}
+
+#clear {
+    width:75px;
+}
+
+#b_person {
+    height:18px;
+    width:45px;
+    font-size:10px;
+}
+
+#brush {
+    width:60px;
+    margin-left:20px;
+}
+
+#eraser {
+    width:100px;
+}
+
+#linewidth {
+    width:15px;
+    margin-left:2px;
+}
+
+#selectLinewidth {
+    margin-left:-6px;
+    width:5px;
+}
+
+#selectLinewidthDrop-down {
+    margin-top:-1px;
+    position:absolute;
+}
+
+#selectLinewidthDrop-down li {
+    list-style:none;
+}
+
+.selectLinewidth {
+    margin-left:305px;
+    width:10px;
+}
+
+#gridSwitch {
+    width:60px;
+    margin-left:10px;
+}
+
+#gemOp {
+    margin-left:13px;
+    width:50px;
+}
+
+#tab1 {
+    margin-left:12px;
+}
+
+.tab {
+    width:60px;
+}
+
+#om_redskabsindex {
+    background-color:#efefef;
+    margin-top:25px;
+    padding:1px 10px 1px 1px;
+    width:720px;
+    margin-left:-10px;
+}
+
+#logoRed {
+    position: absolute;   
+    width:150px;
+    margin-left:545px;
+    margin-top:444px;
+    z-index:10;
+    pointer-events: none;
+}

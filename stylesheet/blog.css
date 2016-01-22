@@ -1,0 +1,20 @@
+#blog_list {}
+#blog_list ul {
+    margin: 0;
+    padding: 0;
+}
+#blog_list ul li {
+    text-decoration: none;
+    display: block;
+}
+.blog_title {}
+.blog_feed {}
+.blog_content {}
+
+.img {
+    text-align:center;
+}
+
+img {
+    height:200px;
+}

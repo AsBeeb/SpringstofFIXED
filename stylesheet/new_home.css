@@ -1,0 +1,180 @@
+/*THEATER START*/
+#theater_con {
+    width: 960px; height: 360px;
+    background-color: #131313;
+}
+#theater {
+    position: relative;
+    margin: auto;
+    width: 640px; height: 360px;
+    background-color: #5c5c5c;
+}
+#theater_vid {
+    width: 640px; height: 360px;
+    margin: 0; padding: 0; border: 0;
+}
+
+/*THEATER END*/
+
+/*STOR NYHED START*/
+#stor_nyhed {
+    position: relative; float: left;
+    width: 600px; height: 410px;
+    padding: 0 60px 0 10px;
+}
+.stor_nyhed_header {
+    font-size: 26px;
+    color: #343434;
+}
+.stor_nyhed_para {}
+.nyhed_img_cover {
+    position: relative;
+    left: 10px;
+    width: 570px; height: 180px;
+    overflow: hidden;
+}
+.nyhed_img_pos {
+    position: relative;
+    top: -150px;
+}
+/*STOR NYHED END*/
+
+/*EVENTS START*/
+ul {
+    display: block;
+}
+li {
+    display: block;
+}
+.event_ul {
+    margin: 0 0 0 20px; padding: 5px 0;
+}
+#event_list {
+    position: relative; float: left;
+    margin: 10px 0 0 0;
+    width: 290px; height: 400px;
+    max-height: 400px;
+    overflow: hidden;
+}
+.event_item {
+    font-size: 16px;
+    margin: 5px 0;
+}
+.event_item:hover {
+    color:#18b41e;
+}
+.nxt_event_header {
+    margin: 0 0 0 10px; padding: 0;
+    font-size: 12px;
+    font-weight: 300;
+}
+/*EVENTS END*/
+
+/*LATEST UPDATES START*/
+#latest_updates {}
+.latest_upd_con {
+    position: relative; float: left;
+    width: 180px; height: 120px;
+    margin: 0 20px; padding: 10px;
+    text-align: center;
+    overflow: hidden;
+}
+.latest_upd_con:hover {
+    background-color: aliceblue;
+}
+.latest_upd_header {
+    position: relative;
+    width: 180px;
+    font-size: 16px;
+    margin: -10px 0 0 -10px; padding: 2px 10px;
+/*    background-color: rgb(24, 180, 30);*/
+    z-index: 5;
+}
+
+.latest_upd_text {
+    position: relative;
+    width: 180px;
+    font-size: 14px;
+    margin: 80px 0 0 0; padding: 0;
+    z-index: 5;
+}
+.mark_rCorner {
+    position: absolute;
+    bottom: 0; right: -45px;
+    width: 170px; height: 40px;
+    background-color: rgba(24, 180, 30, 0.88);
+    transform: rotate(-30deg);
+}
+.latest_upd_bg {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+}
+.upd_bg_1 {
+    width: 100%; height: 100%;
+    background-image: url(../photos/trampolin/mini.JPG);
+    background-size: cover;
+    background-position:center center;
+    background-repeat: no-repeat;
+}
+.upd_bg_2 {
+    width: 100%; height: 100%;
+    background-image: url(../photos/trampolin/mini.JPG);
+    background-size: cover;
+    background-position:center center;
+    background-repeat: no-repeat;
+}
+.upd_bg_3 {
+    width: 100%; height: 100%;
+    background-image: url(../photos/trampolin/mini.JPG);
+    background-size: cover;
+    background-position:center center;
+    background-repeat: no-repeat;
+}
+.upd_bg_4 {
+    width: 100%; height: 100%;
+    background-image: url(../photos/trampolin/mini.JPG);
+    background-size: cover;
+    background-position:center center;
+    background-repeat: no-repeat;
+}
+/*LATEST UPDATES END*/
+
+/*HAVE YOU START*/
+#have_you_content {}
+
+.comp_box {
+    width: 300px; height: 300px;
+    margin: 0; padding: 10px;
+    text-align: center;
+    color: #343434;
+    overflow: hidden;
+}
+.comp_box h3 {
+    font-size: 20px;
+    font-weight: 100;
+}
+.comp_img_con {
+    width: 200px; height: 200px;
+    margin: auto;
+}
+.kolboette {
+    background-image: url(../photos/basal/kol.jpg);
+}
+.salto {
+    background-image: url(../photos/tumbling/for/salto_lukket.jpg);
+}
+.araber {
+    background-image: url(../photos/tumbling/bag/araber.jpg);
+}
+.kolboette, .salto, .araber {
+    background-size: cover;
+}
+/*HAVE YOU END*/
+
+.float {
+    position: relative; float: left;
+}
+a {
+    color: #343434;
+}

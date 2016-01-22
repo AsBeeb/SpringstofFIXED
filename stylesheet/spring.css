@@ -1,0 +1,131 @@
+.hvader {
+    margin: 0 0 0 0;
+    font-size:25px;
+    color: #343434;
+}
+
+.ltext {
+    position: relative; float:left;
+    width:590px; height: auto;
+    margin:0px;
+    padding: 5px 0 0 20px;
+    color: #525252;
+}
+
+.ltext a {
+    color:#00B800;
+}
+
+.springpic {
+    border: 1px solid #434b50;
+}
+
+.rtext {
+    float:;
+    bottom:200px;
+    padding:5px
+}
+
+#long {
+    margin: 40px 0 0 0;
+    color:#1c1c1c; 
+    width:510px;
+}
+
+.longX {
+    position:relative;
+    width:970px;
+    color:#FFF;
+    padding-left:10px;
+    margin-left:0px;
+}
+
+#longX {
+    background-color:#dae5eb;
+}
+
+#longX2 {
+    background-color:#848f96;
+}
+
+#longX3 {
+    background-color:#2e3438;
+}
+
+#egen {
+    position:relative;
+    width:210px;
+    float:right;
+    background-color:#2AE631;
+    padding:20px 10px 20px 20px;
+    margin: 0px -5px 5px -5px;
+}
+
+img {
+    min-width:100px;
+    width:200px;
+    margin-left:-10px;
+}
+
+.egen {
+    position:relative;
+    float:left;
+}
+
+#menu {
+    overflow-x:hidden;
+    max-width:1200px;
+}
+
+.egen_title {
+    font-size:20px;
+}
+
+video {
+    padding:0px 5px 0px 5px
+}
+
+.text2 {
+    padding-left:10px;
+}
+
+p, .springPic {
+    margin-left:10px;
+}
+
+#middle {
+    float:center
+}
+
+.springBox {
+    padding: 0px 1px 10px;
+}
+
+.springPic {
+    height: 200px; width: 300px;
+    margin-top: -10px;
+}
+
+#basalPic {
+    background:url("photos/basal/gulv.jpg");
+}
+
+#basalPic:hover {
+    background:url("");
+}
+
+#miniPic {
+    background:url("photos/trampolin/mini.jpg");
+}
+
+#miniPic:hover {
+    background:url("");
+}
+
+#banePic {
+    background:url("photos/tumbling/bane.jpg");
+}
+
+#banePic:hover {
+    background:url("");
+}
